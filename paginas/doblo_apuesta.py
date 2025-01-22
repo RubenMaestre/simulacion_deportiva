@@ -66,9 +66,9 @@ def display():
     for _, row in df_equipo.iterrows():
         if row["victoria"] == 1:  # Ganado
             if row["home_team_name"] == equipo:
-                ganancia = apuesta_actual * row["odds_ft_home_team_win"] - apuesta_actual
+                ganancia = (apuesta_actual * row["odds_ft_home_team_win"]) - apuesta_actual
             else:
-                ganancia = apuesta_actual * row["odds_ft_away_team_win"] - apuesta_actual
+                ganancia = (apuesta_actual * row["odds_ft_away_team_win"]) - apuesta_actual
             apuesta_actual = cantidad_inicial  # Reinicia la apuesta tras ganar
         else:  # Perdido
             ganancia = -apuesta_actual
