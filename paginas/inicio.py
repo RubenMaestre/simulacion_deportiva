@@ -3,7 +3,7 @@ import streamlit as st
 
 def display():
     # Cabecera del proyecto
-    st.image('sources/logo.png', use_column_width=True)
+    st.image('sources/logo.png', use_container_width=True)  # Cambiado el parámetro
     st.markdown("<br><br>", unsafe_allow_html=True)
 
     # Título
@@ -29,7 +29,7 @@ def display():
         st.write("")
 
     with col3:
-        st.image("sources/logo.png", use_column_width=True)
+        st.image("sources/logo.png", use_container_width=True)  # Cambiado el parámetro
 
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
