@@ -1,4 +1,6 @@
+# modules/create_sidebar.py
 import streamlit as st
+from paginas import inicio  # Importa el módulo de inicio
 
 def create_sidebar():
     # Crear un menú básico en el sidebar
@@ -9,7 +11,7 @@ def create_sidebar():
 
     # Redirigir según la selección
     if menu == "Inicio":
-        st.write("Página de inicio")
+        inicio.display()  # Llama a la función display() de inicio.py
     elif menu == "Datos":
         st.write("Página de datos")
     elif menu == "EDA":
@@ -20,4 +22,3 @@ def create_sidebar():
         st.write("Información sobre el proyecto")
     elif menu == "Sobre nosotros":
         st.write("Información sobre nosotros")
-
