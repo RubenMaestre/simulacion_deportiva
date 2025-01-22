@@ -34,6 +34,9 @@ def display():
     # Introducir cantidad a apostar semanalmente
     cantidad = st.number_input("Cantidad a apostar semanalmente (€):", min_value=0.0, value=10.0, step=5.0)
 
+    # Seleccionar tipo de partidos
+    tipo_partidos = st.radio("Selecciona el tipo de partidos", ["Toda la temporada", "Partidos de local", "Partidos de visitante"])
+
     # Obtener el archivo correspondiente al nombre de temporada seleccionado
     temporada_seleccionada = [archivo for archivo, label in temporadas_mapeo.items() if label == temporada_label][0]
     archivo_seleccionado = os.path.join(ruta_datos, f"{temporada_seleccionada}.xlsx")
@@ -42,9 +45,14 @@ def display():
     df = pd.read_excel(archivo_seleccionado)
 
     # Filtrar los partidos del equipo seleccionado
-    df_equipo = df[
-        (df["home_team_name"] == equipo) | (df["away_team_name"] == equipo)
-    ].copy()
+    if tipo_partidos == "Toda la temporada":
+        df_equipo = df[
+            (df["home_team_name"] == equipo) | (df["away_team_name"] == equipo)
+        ].copy()
+    elif tipo_partidos == "Partidos de local":
+        df_equipo = df[df["home_team_name"] == equipo].copy()
+    elif tipo_partidos == "Partidos de visitante":
+        df_equipo = df[df["away_team_name"] == equipo].copy()
 
     # Calcular ganancias por partido
     def calcular_ganancia(row):
@@ -81,7 +89,7 @@ def display():
     balance_final = ganancia_total - total_gastado
 
     # Mostrar resultados
-    st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label}")
+    st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label} ({tipo_partidos})")
     st.dataframe(df_mostrado)
     st.markdown(f"### Total gastado: **{total_gastado:.2f} €**")
     st.markdown(f"### Total ganancias: **{ganancia_total:.2f} €**")
