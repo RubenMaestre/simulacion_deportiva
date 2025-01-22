@@ -16,8 +16,8 @@ def display():
     # Cargar los nombres de los archivos disponibles
     temporadas_archivos = [archivo.replace(".xlsx", "") for archivo in os.listdir(ruta_datos) if archivo.endswith(".xlsx")]
     
-    # Crear un mapeo para renombrar las temporadas
-    temporadas_mapeo = {archivo: f"Temporada {archivo[-2:]}/{archivo[:4][-2:]}" for archivo in temporadas_archivos}
+   # Crear un mapeo para renombrar las temporadas con el formato correcto "23/24", "22/23", etc.
+    temporadas_mapeo = {archivo: f"Temporada {archivo[:4][-2:]}/{archivo[-2:]}" for archivo in temporadas_archivos}
 
     # Ordenar temporadas de forma descendente por año
     temporadas_ordenadas = sorted(temporadas_mapeo.keys(), reverse=True)
