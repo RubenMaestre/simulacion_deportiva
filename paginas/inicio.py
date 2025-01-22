@@ -5,8 +5,14 @@ import streamlit as st
 def display():
     # Título principal, utilizando Markdown con estilo HTML para personalizar el diseño.
     st.markdown(
-        "<h1 style='text-align: center;'>Simulación de Inversión en Apuestas de Fútbol</h1>",
+        "<h1 style='text-align: center;'>Simulación de inversión en apuestas de Fútbol</h1>",
         unsafe_allow_html=True  # Permite la interpretación de HTML dentro del Markdown.
+    )
+    
+    # Subtítulo que introduce la pregunta clave del proyecto.
+    st.markdown(
+        "<h2 style='text-align: center;'>¿Te has preguntado alguna vez si realmente es rentable apostar toda una temporada al Barcelona o al Madrid?</h2>",
+        unsafe_allow_html=True
     )
     # Espaciado adicional para mejorar la estética visual.
     st.markdown("<br><br>", unsafe_allow_html=True)
@@ -23,15 +29,19 @@ def display():
                     al <strong>FC Barcelona</strong> o al <strong>Real Madrid</strong>, ¿a final de temporada ganarías dinero o lo perderías?
                 </p>
                 <p>
-                    Con esa duda en mente, me puse manos a la obra. Primero, recogí los datos de partidos desde la temporada
-                    2012/2013 hasta la actual. Organizé la información en una gran base de datos y me dediqué a limpiarla para
-                    quedarme solo con lo que realmente necesitaba. Entre esos datos, también incluí la media de las cuotas de
-                    las casas de apuestas.
+                    Me he planteado si esto podría ser una inversión interesante... Igual que comprar acciones de una compañía tiene sus riesgos 
+                    pero puede generar beneficios, ¿apostar por un equipo de fútbol durante toda una temporada, partido a partido, 
+                    puede ser una apuesta rentable?
+                </p>
+                <p>
+                    Con esa duda en mente, me puse manos a la obra. Primero, recogí los datos de partidos desde la temporada 2012/2013 hasta la actual. 
+                    Organizé la información en una gran base de datos y me dediqué a limpiarla para quedarme solo con lo que realmente necesitaba. 
+                    Entre esos datos, también incluí la media de las cuotas de las casas de apuestas.
                 </p>
             </div>
         """, unsafe_allow_html=True)
 
-    with col2:  # Columna del medio: la dejamos vacía para crear un espacio de separación para mantener la página más limpia
+    with col2:  # Columna del medio: la dejamos vacía para crear un espacio de separación para mantener la página más limpia.
         st.write("")
 
     with col3:  # Columna derecha: añadimos la imagen del logo.
