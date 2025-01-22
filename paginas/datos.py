@@ -11,19 +11,29 @@ def display():
     """)
 
     # Ruta relativa a la carpeta "data"
-    ruta_datos = "data"  # Cambiamos a una ruta relativa simple
+    ruta_datos = "data"  # Ruta relativa
     
     # Cargar los nombres de los archivos disponibles
-    temporadas = [archivo.replace(".xlsx", "") for archivo in os.listdir(ruta_datos) if archivo.endswith(".xlsx")]
+    temporadas_archivos = [archivo.replace(".xlsx", "") for archivo in os.listdir(ruta_datos) if archivo.endswith(".xlsx")]
+    
+    # Crear un mapeo para renombrar las temporadas
+    temporadas_mapeo = {archivo: f"Temporada {archivo[-2:]}/{archivo[:4][-2:]}" for archivo in temporadas_archivos}
+
+    # Ordenar temporadas de forma descendente por año
+    temporadas_ordenadas = sorted(temporadas_mapeo.keys(), reverse=True)
+    temporadas_labels = [temporadas_mapeo[archivo] for archivo in temporadas_ordenadas]
 
     # Seleccionar equipo
     equipo = st.selectbox("Selecciona un equipo", ["FC Barcelona", "Real Madrid"])
 
-    # Seleccionar temporada
-    temporada = st.selectbox("Selecciona una temporada", temporadas)
+    # Seleccionar temporada con nombres ajustados
+    temporada_label = st.selectbox("Selecciona una temporada", temporadas_labels)
+    
+    # Obtener el archivo correspondiente al nombre de temporada seleccionado
+    temporada_seleccionada = [archivo for archivo, label in temporadas_mapeo.items() if label == temporada_label][0]
+    archivo_seleccionado = os.path.join(ruta_datos, f"{temporada_seleccionada}.xlsx")
 
     # Cargar datos de la temporada seleccionada
-    archivo_seleccionado = os.path.join(ruta_datos, f"{temporada}.xlsx")
     df = pd.read_excel(archivo_seleccionado)
 
     # Filtrar los partidos del equipo seleccionado
@@ -49,12 +59,20 @@ def display():
 
     # Crear el gráfico
     fig, ax = plt.subplots()
-    conteo_resultados.plot(kind="bar", ax=ax, color=["green", "orange", "red"])
-    ax.set_title(f"Resultados del {equipo} en la temporada {temporada}")
+    barras = conteo_resultados.plot(kind="bar", ax=ax, color=["green", "orange", "red"])
+    ax.set_title(f"Resultados del {equipo} en la {temporada_label}")
     ax.set_xlabel("Resultado")
     ax.set_ylabel("Número de partidos")
     ax.set_xticks(range(len(conteo_resultados.index)))
     ax.set_xticklabels(conteo_resultados.index, rotation=0)
+
+    # Añadir el número encima de cada barra
+    for barra in ax.patches:
+        ax.annotate(
+            f"{barra.get_height():.0f}",  # El número
+            (barra.get_x() + barra.get_width() / 2, barra.get_height()),  # Posición
+            ha="center", va="bottom", fontsize=10, color="black"
+        )
 
     # Mostrar el gráfico
     st.pyplot(fig)
