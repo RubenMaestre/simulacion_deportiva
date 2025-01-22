@@ -1,6 +1,6 @@
 import streamlit as st  # Biblioteca principal para crear la aplicación web
 from streamlit_option_menu import option_menu  # Librería para diseñar un menú de navegación visual y funcional
-from paginas import inicio, datos, simulacion  # Importamos las páginas de la aplicación
+from paginas import inicio, datos, simulacion, doblo_apuesta  # Importamos las páginas de la aplicación
 
 # Función para crear la barra lateral
 def create_sidebar():
@@ -19,8 +19,8 @@ def create_sidebar():
     with st.sidebar:  # El menú se define dentro de la barra lateral
         selected = option_menu(
             "Menú",  # Título del menú
-            ["Inicio", "Datos", "Simulación"],  # Opciones disponibles en el menú
-            icons=["house", "database", "calculator"],  # Íconos asociados a cada opción
+            ["Inicio", "Datos", "Simulación", "Doblo Apuesta"],  # Opciones disponibles en el menú
+            icons=["house", "database", "calculator", "arrow-up-right-circle"],  # Íconos asociados a cada opción
             menu_icon="cast",  # Ícono general del menú
             default_index=0,  # Opción seleccionada por defecto al iniciar la aplicación
             orientation="vertical"  # Configura el menú en formato vertical para un diseño más intuitivo
@@ -34,3 +34,5 @@ def create_sidebar():
         datos.display()  # Muestra la página de Datos
     elif selected == "Simulación":
         simulacion.display()  # Muestra la página de Simulación
+    elif selected == "Doblo Apuesta":
+        doblo_apuesta.display()  # Muestra la página de Doblo Apuesta
