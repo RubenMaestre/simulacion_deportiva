@@ -54,14 +54,24 @@ def display():
     elif tipo_partidos == "Partidos de visitante":
         df_equipo = df[df["away_team_name"] == equipo].copy()
 
+    # Recalcular victoria
+    def calcular_victoria(row):
+        if row["home_team_name"] == equipo:
+            return 1 if row["home_team_goal_count"] > row["away_team_goal_count"] else 0
+        elif row["away_team_name"] == equipo:
+            return 1 if row["away_team_goal_count"] > row["home_team_goal_count"] else 0
+        return 0
+
+    df_equipo["victoria"] = df_equipo.apply(calcular_victoria, axis=1)
+
     # Calcular ganancias por partido
     def calcular_ganancia(row):
-        if row["home_team_name"] == equipo and row["victoria"] == 1:
-            return cantidad * row["odds_ft_home_team_win"]
-        elif row["away_team_name"] == equipo and row["victoria"] == 1:
-            return cantidad * row["odds_ft_away_team_win"]
-        else:
-            return -cantidad  # Si pierde, pierde la cantidad apostada
+        if row["victoria"] == 1:
+            if row["home_team_name"] == equipo:
+                return cantidad * row["odds_ft_home_team_win"]
+            elif row["away_team_name"] == equipo:
+                return cantidad * row["odds_ft_away_team_win"]
+        return -cantidad  # Si pierde, pierde la cantidad apostada
 
     df_equipo["Ganancia"] = df_equipo.apply(calcular_ganancia, axis=1)
 
@@ -72,9 +82,9 @@ def display():
     df_mostrado = df_equipo.rename(columns={
         "home_team_name": "Equipo local",
         "home_team_goal_count": "Goles local",
-        "away_team_goal_count": "Goles visitante",
+        "away_team_goal_count": "Goles visitantes",
         "away_team_name": "Equipo visitante"
-    })[["Equipo local", "Goles local", "Goles visitante", "Equipo visitante", "Acierto", "Ganancia"]]
+    })[["Equipo local", "Goles local", "Goles visitantes", "Equipo visitante", "Acierto", "Ganancia"]]
 
     # Formatear Ganancia solo para mostrar en la tabla
     df_mostrado["Ganancia"] = df_mostrado["Ganancia"].apply(lambda x: f"{x:.2f}".replace(",", "."))
