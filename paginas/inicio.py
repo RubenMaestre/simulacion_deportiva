@@ -1,11 +1,6 @@
-# paginas/inicio.py
 import streamlit as st
 
 def display():
-    # Cabecera del proyecto
-    st.image('sources/logo.png', use_container_width=True)  # Cambiado el parámetro
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
     # Título
     st.markdown(
         "<h1 style='text-align: center;'>Simulación de Inversión en Apuestas de Fútbol</h1>",
@@ -13,15 +8,23 @@ def display():
     )
     st.markdown("<br><br>", unsafe_allow_html=True)
 
-    # Contenido inicial
+    # Introducción personal
     col1, col2, col3 = st.columns([5, 0.5, 2])
 
     with col1:
         st.markdown("""
             <div style='text-align: justify;'>
                 <h3>Introducción</h3>
-                <p>Este proyecto tiene como objetivo desarrollar una simulación de inversión en apuestas deportivas basada en datos históricos de fútbol. Analizaremos patrones, evaluaremos cuotas y determinaremos estrategias para maximizar los retornos a largo plazo.</p>
-                <p>La simulación abarca más de una década de datos de partidos de la Primera División Española, incluyendo equipos icónicos como el <strong>FC Barcelona</strong> y el <strong>Real Madrid</strong>.</p>
+                <p>
+                    Siempre me había preguntado si comenzabas desde la jornada 1 apostando una cantidad fija cada semana
+                    al <strong>FC Barcelona</strong> o al <strong>Real Madrid</strong>, ¿a final de temporada ganarías dinero o lo perderías?
+                </p>
+                <p>
+                    Con esa duda en mente, me puse manos a la obra. Primero, recogí los datos de partidos desde la temporada
+                    2012/2013 hasta la actual. Organizé la información en una gran base de datos y me dediqué a limpiarla para
+                    quedarme solo con lo que realmente necesitaba. Entre esos datos, también incluí la media de las cuotas de
+                    las casas de apuestas.
+                </p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -29,17 +32,26 @@ def display():
         st.write("")
 
     with col3:
-        st.image("sources/logo.png", use_container_width=True)  # Cambiado el parámetro
+        st.write("")
 
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
+    # Explicación del proyecto
     col4, col5, col6 = st.columns([5, 0.8, 5])
 
     with col4:
         st.markdown("""
             <div style='text-align: justify;'>
-                <h4>El Equipo</h4>
-                Este proyecto ha sido desarrollado por <strong>Rubén Maestre</strong>, combinando conocimientos en ciencia de datos, IA y estrategias de marketing digital para abordar problemas prácticos del mundo de las apuestas deportivas.
+                <h4>Metodología</h4>
+                <p>
+                    He creado diferentes documentos por temporada, separando los partidos de cada año. Tampoco me he complicado
+                    mucho ajustando las cuotas, porque suelen ser bastante similares en todas las casas de apuestas, especialmente
+                    cuando estos equipos se enfrentan a rivales inferiores.
+                </p>
+                <p>
+                    La idea principal fue analizar los resultados de apostar una cantidad fija cada semana y ver si, al final de la temporada,
+                    las ganancias superaban a las pérdidas.
+                </p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -49,12 +61,34 @@ def display():
     with col6:
         st.markdown("""
             <div style='text-align: justify;'>
-                <h4>Objetivo y Enfoque</h4>
-                Este proyecto busca responder preguntas clave, como:
+                <h4>Las páginas del proyecto</h4>
+                <p>
+                    He dividido este proyecto en dos páginas principales:
+                </p>
                 <ul>
-                    <li>¿Es posible construir una estrategia ganadora en apuestas deportivas a largo plazo?</li>
-                    <li>¿Cómo afectan las cuotas y resultados históricos al rendimiento de una inversión?</li>
+                    <li>
+                        <strong>Página de datos</strong>: En esta sección puedes ver el número de victorias, empates y derrotas del <strong>FC Barcelona</strong>
+                        y del <strong>Real Madrid</strong> para cada temporada.
+                    </li>
+                    <li>
+                        <strong>Página de simulación</strong>: Aquí puedes introducir una cantidad fija para apostar semanalmente y descubrir si ganarías
+                        dinero o no al final de la temporada. Además, puedes filtrar para que solo se consideren los partidos de local,
+                        de visitante, o todos los partidos de la temporada.
+                    </li>
                 </ul>
-                Nuestra metodología combina análisis estadístico y simulaciones para evaluar el desempeño de diferentes estrategias de apuestas.
             </div>
         """, unsafe_allow_html=True)
+
+    st.markdown("<br><br><br>", unsafe_allow_html=True)
+
+    # Cierre
+    st.markdown("""
+        <div style='text-align: justify;'>
+            <h4>Conclusión</h4>
+            <p>
+                Este proyecto es una combinación de análisis de datos y simulaciones financieras aplicadas al mundo de las apuestas deportivas.
+                Si te interesa descubrir si apostar al <strong>FC Barcelona</strong> o al <strong>Real Madrid</strong> es una estrategia ganadora,
+                te invito a explorar cada una de las páginas y probar diferentes escenarios.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
