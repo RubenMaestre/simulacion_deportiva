@@ -54,8 +54,10 @@ def display():
 
     df_equipo["Resultado"] = df_equipo.apply(calcular_resultado, axis=1)
 
-    # Contar victorias, empates y derrotas
+    # Contar victorias, empates y derrotas con un orden predefinido
+    categorias = ["Victoria", "Empate", "Derrota"]
     conteo_resultados = df_equipo["Resultado"].value_counts()
+    conteo_resultados = conteo_resultados.reindex(categorias, fill_value=0)  # Ordena y rellena valores faltantes con 0
 
     # Crear el gráfico
     fig, ax = plt.subplots()
