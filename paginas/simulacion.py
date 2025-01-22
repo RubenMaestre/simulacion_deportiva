@@ -57,11 +57,18 @@ def display():
 
     df_equipo["Ganancia"] = df_equipo.apply(calcular_ganancia, axis=1)
 
+    # Calcular total gastado
+    total_gastado = cantidad * len(df_equipo)
+
     # Calcular total de ganancias
     ganancia_total = df_equipo["Ganancia"].sum()
+
+    # Calcular balance final
+    balance_final = ganancia_total - total_gastado
 
     # Mostrar resultados
     st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label}")
     st.dataframe(df_equipo[["home_team_name", "away_team_name", "victoria", "Ganancia"]])
-    st.markdown(f"### Ganancia/Pérdida total: **{ganancia_total:.2f} €**")
-
+    st.markdown(f"### Total gastado: **{total_gastado:.2f} €**")
+    st.markdown(f"### Total ganancias: **{ganancia_total:.2f} €**")
+    st.markdown(f"### Balance final: **{balance_final:.2f} €**")
