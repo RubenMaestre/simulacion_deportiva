@@ -5,7 +5,7 @@ import streamlit as st
 def display():
     # Título principal, utilizando Markdown con estilo HTML para personalizar el diseño.
     st.markdown(
-        "<h1 style='text-align: center;'>Simulación de inversión en apuestas de Fútbol</h1>",
+        "<h1 style='text-align: center;'>Simulación de inversión en apuestas de fútbol</h1>",
         unsafe_allow_html=True  # Permite la interpretación de HTML dentro del Markdown.
     )
     
@@ -26,11 +26,11 @@ def display():
                 <h3>Introducción</h3>
                 <p>
                     Siempre me había preguntado si comenzabas desde la jornada 1 apostando una cantidad fija cada semana
-                    al <strong>FC Barcelona</strong> o al <strong>Real Madrid</strong>, ¿a final de temporada ganarías dinero o lo perderías?
+                    al <strong>FC Barcelona</strong> o al <strong>Real Madrid</strong>, ¿A final de temporada ganarías dinero o lo perderías?
                 </p>
                 <p>
                     Me he planteado si esto podría ser una inversión interesante... Igual que comprar acciones de una compañía tiene sus riesgos 
-                    pero puede generar beneficios, ¿apostar por un equipo de fútbol durante toda una temporada, partido a partido, 
+                    pero puede generar beneficios, ¿Apostar por un equipo de fútbol durante toda una temporada, partido a partido, 
                     puede ser una apuesta rentable?
                 </p>
                 <p>
@@ -96,14 +96,21 @@ def display():
     # Espaciado final para claridad.
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-    # Conclusión que destaca la utilidad del proyecto.
+    # Reflexión final sobre el proyecto y futuras ideas...
     st.markdown("""
         <div style='text-align: justify;'>
-            <h4>Conclusión</h4>
+            <h4>Próximos pasos</h4>
             <p>
                 Este proyecto es una combinación de análisis de datos y simulaciones financieras aplicadas al mundo de las apuestas deportivas.
                 Si te interesa descubrir si apostar al <strong>FC Barcelona</strong> o al <strong>Real Madrid</strong> es una estrategia ganadora,
                 te invito a explorar cada una de las páginas y probar diferentes escenarios.
             </p>
+            <p>
+                Pero no acaba aquí. Igual que tenía curiosidad por el Barcelona y el Madrid, también me ronda la idea de que en la Segunda División 
+                del fútbol español todas las semanas hay un alto número de empates. Las cuotas en estos casos suelen ser mayores, lo que plantea una 
+                pregunta interesante: ¿Se podría ganar dinero apostando todas las semanas a que hay empates en los partidos de Segunda División? 
+                Pues bien, esto lo veremos en la siguiente entrega...
+            </p>
         </div>
+
     """, unsafe_allow_html=True)
