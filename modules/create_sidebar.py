@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from paginas import inicio, datos, simulacion, sobre_proyecto, sobre_nosotros
+from paginas import inicio, datos, simulacion
 
 def create_sidebar():
     # Añadir texto personalizado en el sidebar con markdown y HTML
@@ -30,4 +30,3 @@ def create_sidebar():
         datos.display()
     elif selected == "Simulación":
         simulacion.display()
-
