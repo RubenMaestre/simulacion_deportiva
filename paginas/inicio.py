@@ -1,17 +1,20 @@
+# Importamos la librería Streamlit para crear aplicaciones web interactivas y visualizaciones.
 import streamlit as st
 
+# Definimos una función principal para mostrar el contenido de la aplicación.
 def display():
-    # Título
+    # Título principal, utilizando Markdown con estilo HTML para personalizar el diseño.
     st.markdown(
         "<h1 style='text-align: center;'>Simulación de Inversión en Apuestas de Fútbol</h1>",
-        unsafe_allow_html=True
+        unsafe_allow_html=True  # Permite la interpretación de HTML dentro del Markdown.
     )
+    # Espaciado adicional para mejorar la estética visual.
     st.markdown("<br><br>", unsafe_allow_html=True)
 
-    # Introducción personal
-    col1, col2, col3 = st.columns([5, 0.5, 2])
+    # Sección de introducción personal, dividida en columnas para un diseño equilibrado.
+    col1, col2, col3 = st.columns([5, 0.5, 2])  # Ajustamos el ancho relativo de las columnas.
 
-    with col1:
+    with col1:  # Primera columna: contiene el texto de introducción.
         st.markdown("""
             <div style='text-align: justify;'>
                 <h3>Introducción</h3>
@@ -28,18 +31,19 @@ def display():
             </div>
         """, unsafe_allow_html=True)
 
-    with col2:
+    with col2:  # Columna del medio: añadimos la imagen del logo.
+        st.image("sources/logo.png", width=240)  # Ajustamos el tamaño de la imagen.
+
+    with col3:  # Columna derecha: actualmente vacía, reservada para futuros elementos.
         st.write("")
 
-    with col3:
-        st.write("")
-
+    # Más espaciado para mantener un diseño limpio y ordenado.
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-    # Explicación del proyecto
-    col4, col5, col6 = st.columns([5, 0.8, 5])
+    # Sección explicativa del proyecto, dividida en columnas para destacar diferentes aspectos.
+    col4, col5, col6 = st.columns([5, 0.8, 5])  # Columnas equilibradas con un separador estrecho.
 
-    with col4:
+    with col4:  # Primera columna de esta sección: metodología.
         st.markdown("""
             <div style='text-align: justify;'>
                 <h4>Metodología</h4>
@@ -55,10 +59,10 @@ def display():
             </div>
         """, unsafe_allow_html=True)
 
-    with col5:
+    with col5:  # Separador visual.
         st.write("")
 
-    with col6:
+    with col6:  # Segunda columna: descripción de las páginas del proyecto.
         st.markdown("""
             <div style='text-align: justify;'>
                 <h4>Las páginas del proyecto</h4>
@@ -79,9 +83,10 @@ def display():
             </div>
         """, unsafe_allow_html=True)
 
+    # Espaciado final para claridad.
     st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-    # Cierre
+    # Conclusión que destaca la utilidad del proyecto.
     st.markdown("""
         <div style='text-align: justify;'>
             <h4>Conclusión</h4>

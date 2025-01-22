@@ -2,49 +2,52 @@ import streamlit as st
 import pandas as pd
 import os
 
+# Función principal que genera la interfaz y realiza la simulación
 def display():
+    # Título principal y descripción del propósito de la página
     st.title("Simulación de Apuestas")
     st.markdown("""
-        En esta sección puedes simular las ganancias o pérdidas al apostar una cantidad fija semanal al FC Barcelona o al Real Madrid,
-        basándonos en datos históricos y las cuotas disponibles.
+    Descubre si apostar una cantidad fija semanal al **FC Barcelona** o al **Real Madrid** podría haber sido una estrategia ganadora.
+    Basándonos en datos históricos y las cuotas promedio de las casas de apuestas, esta simulación te permite analizar de manera clara
+    las ganancias o pérdidas que podrías haber obtenido a lo largo de una temporada completa.
     """)
 
-    # Ruta relativa a la carpeta "data"
+    # Ruta relativa donde se encuentran los archivos con los datos históricos
     ruta_datos = "data"
     
-    # Cargar los nombres de los archivos disponibles
+    # Listamos los archivos Excel disponibles en la carpeta "data", eliminando la extensión .xlsx para mayor claridad
     temporadas_archivos = [archivo.replace(".xlsx", "") for archivo in os.listdir(ruta_datos) if archivo.endswith(".xlsx")]
     
-    # Crear un mapeo para renombrar las temporadas
+    # Creamos un diccionario que mapea los nombres de archivo a un formato más amigable para el usuario
     temporadas_mapeo = {
         archivo: f"Temporada {archivo[:4][-2:]}/{archivo[-2:]}"
         for archivo in temporadas_archivos
     }
 
-    # Ordenar temporadas de forma descendente por año
+    # Ordenamos las temporadas en orden descendente para que las más recientes aparezcan primero
     temporadas_ordenadas = sorted(temporadas_mapeo.keys(), reverse=True)
     temporadas_labels = [temporadas_mapeo[archivo] for archivo in temporadas_ordenadas]
 
-    # Seleccionar equipo
+    # Selección del equipo para el que se hará la simulación
     equipo = st.selectbox("Selecciona un equipo", ["FC Barcelona", "Real Madrid"])
 
-    # Seleccionar temporada con nombres ajustados
+    # Selección de la temporada, mostrando los nombres ajustados
     temporada_label = st.selectbox("Selecciona una temporada", temporadas_labels)
 
-    # Introducir cantidad a apostar semanalmente
+    # Input para definir la cantidad fija que se apostará cada semana
     cantidad = st.number_input("Cantidad a apostar semanalmente (€):", min_value=0.0, value=10.0, step=5.0)
 
-    # Seleccionar tipo de partidos
+    # Selección del tipo de partidos a considerar: toda la temporada, partidos de local o de visitante
     tipo_partidos = st.radio("Selecciona el tipo de partidos", ["Toda la temporada", "Partidos de local", "Partidos de visitante"])
 
-    # Obtener el archivo correspondiente al nombre de temporada seleccionado
+    # Obtenemos el archivo correspondiente según la temporada seleccionada
     temporada_seleccionada = [archivo for archivo, label in temporadas_mapeo.items() if label == temporada_label][0]
     archivo_seleccionado = os.path.join(ruta_datos, f"{temporada_seleccionada}.xlsx")
 
-    # Cargar datos de la temporada seleccionada
+    # Cargamos los datos de la temporada seleccionada
     df = pd.read_excel(archivo_seleccionado)
 
-    # Filtrar los partidos del equipo seleccionado
+    # Filtramos los partidos según el equipo seleccionado y el tipo de partidos
     if tipo_partidos == "Toda la temporada":
         df_equipo = df[
             (df["home_team_name"] == equipo) | (df["away_team_name"] == equipo)
@@ -54,7 +57,7 @@ def display():
     elif tipo_partidos == "Partidos de visitante":
         df_equipo = df[df["away_team_name"] == equipo].copy()
 
-    # Recalcular victoria
+    # Función que determina si el equipo ganó el partido
     def calcular_victoria(row):
         if row["home_team_name"] == equipo:
             return 1 if row["home_team_goal_count"] > row["away_team_goal_count"] else 0
@@ -64,21 +67,21 @@ def display():
 
     df_equipo["victoria"] = df_equipo.apply(calcular_victoria, axis=1)
 
-    # Calcular ganancias por partido
+    # Función que calcula la ganancia por partido, dependiendo del resultado
     def calcular_ganancia(row):
         if row["victoria"] == 1:
             if row["home_team_name"] == equipo:
                 return cantidad * row["odds_ft_home_team_win"]
             elif row["away_team_name"] == equipo:
                 return cantidad * row["odds_ft_away_team_win"]
-        return -cantidad  # Si pierde, pierde la cantidad apostada
+        return -cantidad  # Si pierde, se resta la cantidad apostada
 
     df_equipo["Ganancia"] = df_equipo.apply(calcular_ganancia, axis=1)
 
-    # Formatear columna victoria como "Acierto" (Fallo o Ganado)
+    # Creamos una columna adicional para indicar si la apuesta fue acertada o no
     df_equipo["Acierto"] = df_equipo["victoria"].apply(lambda x: "Ganado" if x == 1 else "Fallo")
 
-    # Crear un DataFrame con las columnas solicitadas
+    # Renombramos y seleccionamos las columnas clave para mostrarlas en la tabla de resultados
     df_mostrado = df_equipo.rename(columns={
         "home_team_name": "Equipo local",
         "home_team_goal_count": "Goles local",
@@ -86,19 +89,19 @@ def display():
         "away_team_name": "Equipo visitante"
     })[["Equipo local", "Goles local", "Goles visitantes", "Equipo visitante", "Acierto", "Ganancia"]]
 
-    # Formatear Ganancia solo para mostrar en la tabla
+    # Formateamos las ganancias para mostrar dos decimales en la tabla
     df_mostrado["Ganancia"] = df_mostrado["Ganancia"].apply(lambda x: f"{x:.2f}".replace(",", "."))
 
-    # Calcular total gastado
+    # Calculamos el total gastado, multiplicando la cantidad apostada por el número de partidos
     total_gastado = cantidad * len(df_equipo)
 
-    # Calcular total de ganancias
+    # Calculamos el total de ganancias acumuladas
     ganancia_total = df_equipo["Ganancia"].sum()
 
-    # Calcular balance final
+    # Calculamos el balance final restando el total gastado a las ganancias
     balance_final = ganancia_total - total_gastado
 
-    # Mostrar resultados
+    # Mostramos los resultados de la simulación en la interfaz
     st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label} ({tipo_partidos})")
     st.dataframe(df_mostrado)
     st.markdown(f"### Total gastado: **{total_gastado:.2f} €**")
