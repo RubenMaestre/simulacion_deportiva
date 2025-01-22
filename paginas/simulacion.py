@@ -5,7 +5,7 @@ import os
 # Función principal que genera la interfaz y realiza la simulación
 def display():
     # Título principal y descripción del propósito de la página
-    st.title("Simulación de Apuestas")
+    st.title("Simulación de apuestas")
     st.markdown("""
     Descubre si apostar una cantidad fija semanal al **FC Barcelona** o al **Real Madrid** podría haber sido una estrategia ganadora.
     Basándonos en datos históricos y las cuotas promedio de las casas de apuestas, esta simulación te permite analizar de manera clara
