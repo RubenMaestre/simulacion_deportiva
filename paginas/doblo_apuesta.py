@@ -60,21 +60,23 @@ def display():
 
     # Simulación de la estrategia de doblar la apuesta
     apuesta_actual = cantidad_inicial
-    ganancias = []
     total_gastado = 0.0
+    ganancias = []
 
     for _, row in df_equipo.iterrows():
+        # Registrar el gasto de la apuesta actual
+        total_gastado += apuesta_actual
+
         if row["victoria"] == 1:  # Ganado
             if row["home_team_name"] == equipo:
-                ganancia = (apuesta_actual * row["odds_ft_home_team_win"])
+                ganancia = apuesta_actual * row["odds_ft_home_team_win"]
             else:
-                ganancia = (apuesta_actual * row["odds_ft_away_team_win"])
+                ganancia = apuesta_actual * row["odds_ft_away_team_win"]
             apuesta_actual = cantidad_inicial  # Reinicia la apuesta tras ganar
         else:  # Perdido
             ganancia = -apuesta_actual
             apuesta_actual *= 2  # Duplicar apuesta tras pérdida
 
-        total_gastado += apuesta_actual / 2  # Gasto en la jornada actual
         ganancias.append(ganancia)
 
     # Agregar las ganancias al DataFrame
@@ -93,7 +95,7 @@ def display():
 
     # Calcular balance final
     ganancia_total = sum(ganancias)
-    balance_final = ganancia_total - total_gastado  # Corrección: Resta del gasto total
+    balance_final = ganancia_total - total_gastado
 
     # Mostrar resultados
     st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label} ({tipo_partidos})")
