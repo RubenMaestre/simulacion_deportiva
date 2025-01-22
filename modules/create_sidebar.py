@@ -16,8 +16,8 @@ def create_sidebar():
     with st.sidebar:
         selected = option_menu(
             "Menú",
-            ["Inicio", "Datos", "Simulación", "Sobre el proyecto", "Sobre nosotros"],
-            icons=["house", "database", "calculator", "book", "people"],
+            ["Inicio", "Datos", "Simulación"],
+            icons=["house", "database", "calculator"],
             menu_icon="cast",
             default_index=0,
             orientation="vertical"
@@ -30,7 +30,4 @@ def create_sidebar():
         datos.display()
     elif selected == "Simulación":
         simulacion.display()
-    elif selected == "Sobre el proyecto":
-        sobre_proyecto.display()
-    elif selected == "Sobre nosotros":
-        sobre_nosotros.display()
+
