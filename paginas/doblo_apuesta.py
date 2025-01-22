@@ -93,7 +93,7 @@ def display():
 
     # Calcular balance final
     ganancia_total = sum(ganancias)
-    balance_final = ganancia_total
+    balance_final = ganancia_total - total_gastado  # CORRECCIÓN AQUÍ
 
     # Mostrar resultados
     st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label} ({tipo_partidos})")
@@ -101,3 +101,4 @@ def display():
     st.markdown(f"### Total gastado: **{total_gastado:.2f} €**")
     st.markdown(f"### Total ganancias: **{ganancia_total:.2f} €**")
     st.markdown(f"### Balance final: **{balance_final:.2f} €**")
+
