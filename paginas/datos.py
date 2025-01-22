@@ -10,8 +10,8 @@ def display():
         Aquí puedes seleccionar un equipo y una temporada para visualizar el rendimiento en términos de victorias, empates y derrotas.
     """)
 
-    # Ruta donde se encuentran los archivos Excel
-    ruta_datos = r"C:\Users\34670\Desktop\python\base_datos_futbol\proyecto_inversion\data"
+    # Ruta relativa a la carpeta "data"
+    ruta_datos = "data"  # Cambiamos a una ruta relativa simple
     
     # Cargar los nombres de los archivos disponibles
     temporadas = [archivo.replace(".xlsx", "") for archivo in os.listdir(ruta_datos) if archivo.endswith(".xlsx")]
