@@ -1,9 +1,9 @@
 # modules/create_sidebar.py
 import streamlit as st
-from paginas import inicio  # Importa el módulo de inicio
+from paginas import inicio, datos  # Asegúrate de importar datos.py
 
 def create_sidebar():
-    # Crear un menú básico en el sidebar
+    # Crear el menú lateral
     menu = st.sidebar.radio(
         "Menú",
         ["Inicio", "Datos", "EDA", "Modelo", "Sobre el proyecto", "Sobre nosotros"]
@@ -11,9 +11,9 @@ def create_sidebar():
 
     # Redirigir según la selección
     if menu == "Inicio":
-        inicio.display()  # Llama a la función display() de inicio.py
+        inicio.display()
     elif menu == "Datos":
-        st.write("Página de datos")
+        datos.display()  # Llama a la función display() de datos.py
     elif menu == "EDA":
         st.write("Análisis Exploratorio de Datos (EDA)")
     elif menu == "Modelo":
