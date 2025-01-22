@@ -28,7 +28,7 @@ def display():
     temporada_label = st.selectbox("Selecciona una temporada", temporadas_labels)
 
     # Introducir cantidad fija inicial
-    cantidad_inicial = st.number_input("Cantidad inicial a apostar (€):", min_value=1.0, value=100.0, step=50.0)
+    cantidad_inicial = st.number_input("Cantidad inicial a apostar (€):", min_value=1.0, value=10.0, step=5.0)
 
     # Tipo de partidos
     tipo_partidos = st.radio("Selecciona el tipo de partidos", ["Toda la temporada", "Partidos de local", "Partidos de visitante"])
@@ -66,15 +66,15 @@ def display():
     for _, row in df_equipo.iterrows():
         if row["victoria"] == 1:  # Ganado
             if row["home_team_name"] == equipo:
-                ganancia = apuesta_actual * row["odds_ft_home_team_win"]
+                ganancia = (apuesta_actual * row["odds_ft_home_team_win"])
             else:
-                ganancia = apuesta_actual * row["odds_ft_away_team_win"]
+                ganancia = (apuesta_actual * row["odds_ft_away_team_win"])
             apuesta_actual = cantidad_inicial  # Reinicia la apuesta tras ganar
         else:  # Perdido
             ganancia = -apuesta_actual
             apuesta_actual *= 2  # Duplicar apuesta tras pérdida
 
-        total_gastado += apuesta_actual / 2  # Añadir el gasto de la apuesta actual antes de doblarla
+        total_gastado += apuesta_actual / 2  # Gasto en la jornada actual
         ganancias.append(ganancia)
 
     # Agregar las ganancias al DataFrame
@@ -93,7 +93,7 @@ def display():
 
     # Calcular balance final
     ganancia_total = sum(ganancias)
-    balance_final = ganancia_total - total_gastado  # CORRECCIÓN AQUÍ
+    balance_final = ganancia_total - total_gastado  # Corrección: Resta del gasto total
 
     # Mostrar resultados
     st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label} ({tipo_partidos})")
@@ -101,4 +101,3 @@ def display():
     st.markdown(f"### Total gastado: **{total_gastado:.2f} €**")
     st.markdown(f"### Total ganancias: **{ganancia_total:.2f} €**")
     st.markdown(f"### Balance final: **{balance_final:.2f} €**")
-
