@@ -57,18 +57,32 @@ def display():
 
     df_equipo["Ganancia"] = df_equipo.apply(calcular_ganancia, axis=1)
 
+    # Formatear columna victoria como "Acierto" (Fallo o Ganado)
+    df_equipo["Acierto"] = df_equipo["victoria"].apply(lambda x: "Ganado" if x == 1 else "Fallo")
+
+    # Formatear la columna Ganancia sin coma, pero con punto
+    df_equipo["Ganancia"] = df_equipo["Ganancia"].apply(lambda x: f"{x:,.2f}".replace(",", "."))
+
+    # Crear un DataFrame con las columnas solicitadas
+    df_mostrado = df_equipo.rename(columns={
+        "home_team_name": "Equipo local",
+        "home_team_goal_count": "Goles local",
+        "away_team_goal_count": "Goles visitante",
+        "away_team_name": "Equipo visitante"
+    })[["Equipo local", "Goles local", "Goles visitante", "Equipo visitante", "Acierto", "Ganancia"]]
+
     # Calcular total gastado
     total_gastado = cantidad * len(df_equipo)
 
     # Calcular total de ganancias
-    ganancia_total = df_equipo["Ganancia"].sum()
+    ganancia_total = df_equipo["Ganancia"].astype(float).sum()
 
     # Calcular balance final
     balance_final = ganancia_total - total_gastado
 
     # Mostrar resultados
     st.markdown(f"### Resultados de la simulación para el {equipo} en la {temporada_label}")
-    st.dataframe(df_equipo[["home_team_name", "away_team_name", "victoria", "Ganancia"]])
+    st.dataframe(df_mostrado)
     st.markdown(f"### Total gastado: **{total_gastado:.2f} €**")
     st.markdown(f"### Total ganancias: **{ganancia_total:.2f} €**")
     st.markdown(f"### Balance final: **{balance_final:.2f} €**")
