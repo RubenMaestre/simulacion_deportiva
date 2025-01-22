@@ -31,11 +31,11 @@ def display():
             </div>
         """, unsafe_allow_html=True)
 
-    with col2:  # Columna del medio: añadimos la imagen del logo.
-        st.image("sources/logo.png", width=240)  # Ajustamos el tamaño de la imagen.
-
-    with col3:  # Columna derecha: actualmente vacía, reservada para futuros elementos.
+    with col2:  # Columna del medio: la dejamos vacía para crear un espacio de separación para mantener la página más limpia
         st.write("")
+
+    with col3:  # Columna derecha: añadimos la imagen del logo.
+        st.image("sources/logo.png", width=240)  # Ajustamos el tamaño de la imagen.
 
     # Más espaciado para mantener un diseño limpio y ordenado.
     st.markdown("<br><br><br>", unsafe_allow_html=True)
